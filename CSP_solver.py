@@ -216,8 +216,16 @@ class CSP:
         return [v for v in self.variables if v.value is None]
     
     def mrv_heuristic(self) -> Variable:
-        # You have to implement this yourself
-        raise NotImplementedError
+        unassigned_variables = self.unassigned_var()
+        min_var = unassigned_variables[0]
+        min_size = len(min_var.domain)
+
+        for v in unassigned_variables:
+            if len(v.domain)<min_size:
+                min_var = v
+                min_size = len(v.domain)
+        
+        return min_var
 
     def degree_heuristic(self) -> Variable:
         # You have to implement this yourself
