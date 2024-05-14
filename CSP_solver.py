@@ -228,8 +228,16 @@ class CSP:
         return min_var
 
     def degree_heuristic(self) -> Variable:
-        # You have to implement this yourself
-        raise NotImplementedError
+        unassigned_variables = self.unassigned_var()
+        max_var = unassigned_variables[0]
+        max_degree = len(max_var.constraints)
+        
+        for v in unassigned_variables:
+            if len(max_var.constraints_with_degree(n_unassigned=2))> max_degree:
+                max_var=v
+                max_degree = len(max_var.constraints_with_degree(n_unassigned=2))
+        
+        return max_var
     
     def choose_next_variable(self) -> Variable:
         return self.variables[self.n_assigned_variables]
